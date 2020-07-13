@@ -20,27 +20,25 @@
     <p><button onclick="getNbCom()">Rafraichir</button></p>
 
     <script>
-        getNbCom();
-        getUsers();
+        api_url = "http://127.0.0.1:4242/"
+
+        getAverageSatisfaction()
 
         function getNbCom()
         {
-            var Url = "localhost:4242/average_satisfaction";
-            const xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", Url);
-            xmlHttp.send();
-            console.log(xmlHttp.responseText);
-            document.getElementById("nbComs").innerHTML = xmlHttp.responseText.data;
+            document.getElementById("nbComs").innerHTML = "2"
         }
 
-        function getUsers()
-        {
-            var Url = "localhost:4242/client_comments";
-            const xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", Url);
-            xmlHttp.send();
-            console.log(xmlHttp.responseText);
+        function getAverageSatisfaction() {
+            var xmlHttp = new XMLHttpRequest()
+            xmlHttp.onload = function () {
+                data = JSON.parse(this.responseText)
+                document.getElementById("nbComs").innerHTML = data["data"]
+            }
+            xmlHttp.open( "GET", api_url + "average_satisfaction", true ) // false for synchronous request
+            xmlHttp.send( null )
         }
+
     </script>
 </body>
 </html>
