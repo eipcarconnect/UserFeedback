@@ -15,14 +15,31 @@
         </select>
     </p>
     <h2>Commentaires</h2>
-        le nombre actuel de commentaire est de <span id="nbComs"></span>
+        Commentaires : <span id="nbComs"></span><br/>
+
+    <p><button onclick="getNbCom()">Rafraichir</button></p>
 
     <script>
         getNbCom();
+        getUsers();
 
         function getNbCom()
         {
-            document.getElementById("nbComs").innerHTML = "2";
+            var Url = "localhost:4242/average_satisfaction";
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", Url);
+            xmlHttp.send();
+            console.log(xmlHttp.responseText);
+            document.getElementById("nbComs").innerHTML = xmlHttp.responseText.data;
+        }
+
+        function getUsers()
+        {
+            var Url = "localhost:4242/client_comments";
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", Url);
+            xmlHttp.send();
+            console.log(xmlHttp.responseText);
         }
     </script>
 </body>
