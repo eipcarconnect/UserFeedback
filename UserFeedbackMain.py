@@ -40,6 +40,7 @@ class UserFeedback(object):
     # TO HANDLE A NEW URL CHANGE "urltest"
     @cherrypy.expose
     @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
     def urltest(self):
         print("urltest")
         return {"message": "urltest"}
