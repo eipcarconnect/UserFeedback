@@ -95,7 +95,8 @@ class UserFeedback(object):
 if __name__ == '__main__':
     cherrypy.config.update({
         'server.socket_host': SERVER_IP,
-        'server.socket_port': SERVER_PORT
+        'server.socket_port': SERVER_PORT,
+        'cors.expose.on': True
     })
     cherrypy.quickstart(UserFeedback())
     print("alo")
