@@ -1,5 +1,6 @@
 import cherrypy
 import os.path
+from os.path import abspath
 
 from UserFeedbackHelper import *
 
@@ -19,7 +20,9 @@ class UserFeedback(object):
         if cherrypy.request.method == "POST":
             return self.handle_post(cherrypy.request)
 
-        return '''<meta http-equiv="refresh" content=";URL=https://www.youtube.com/watch?v=dQw4w9WgXcQ">'''
+        #return '''<meta http-equiv="refresh" content=";URL=https://www.youtube.com/watch?v=dQw4w9WgXcQ">'''
+
+        return open("media/index.html")
 
     @cherrypy.expose
     def generate(self):
