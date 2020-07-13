@@ -28,6 +28,8 @@ class UserFeedback(object):
     def generate(self):
         pass
 
+
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def handle_post(self, request):
         body = request.json

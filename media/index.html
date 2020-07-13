@@ -15,28 +15,40 @@
         </select>
     </p>
     <h2>Commentaires</h2>
-        le nombre actuel de commentaire est de <span id="nbComs"></span>
+        La satifaction moyenne est de: <span id="nbComs"></span> / 5
+    <ul id="commentaires">
+
+    </ul>
 
     <script>
         api_url = "http://127.0.0.1:4242/"
 
         getAverageSatisfaction()
-
-        function getNbCom()
-        {
-            document.getElementById("nbComs").innerHTML = "2"
-        }
-
+        getComments()
 
         function getAverageSatisfaction() {
-            var xmlHttp = new XMLHttpRequest()
+            let xmlHttp = new XMLHttpRequest()
             xmlHttp.onload = function () {
-                data = JSON.parse(this.responseText)
+                let data = JSON.parse(this.responseText)
                 document.getElementById("nbComs").innerHTML = data["data"]
             }
-            xmlHttp.open( "GET", api_url + "average_satisfaction", true ) // false for synchronous request
+            xmlHttp.open( "GET", api_url + "average_satisfaction", true )
             xmlHttp.send( null )
-            // return xmlHttp.responseText;
+        }
+
+        function getComments() {
+            let xmlHttp = new XMLHttpRequest()
+            xmlHttp.onload = function () {
+                let data = JSON.parse(this.responseText)
+                let parent = document.getElementById('commentaires')
+                for (let i = 0; i < data["users"].length; ++i) {
+                    let newChild = document.createElement('p')
+                    newChild.textContent = data["users"][i] + ":\t" + data["messages"][i]
+                    parent.appendChild(newChild)
+                }
+            }
+            xmlHttp.open( "GET", api_url + "client_comments", true )
+            xmlHttp.send( null )
         }
 
     </script>
