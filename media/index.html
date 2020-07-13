@@ -18,6 +18,8 @@
         le nombre actuel de commentaire est de <span id="nbComs"></span>
 
     <script>
+        api_url = "http://127.0.0.1:4242/"
+
         getAverageSatisfaction()
 
         function getNbCom()
@@ -32,7 +34,7 @@
                 data = JSON.parse(this.responseText)
                 document.getElementById("nbComs").innerHTML = data["data"]
             }
-            xmlHttp.open( "GET", "http://127.0.0.1:4242/average_satisfaction", true ) // false for synchronous request
+            xmlHttp.open( "GET", api_url + "average_satisfaction", true ) // false for synchronous request
             xmlHttp.send( null )
             // return xmlHttp.responseText;
         }
