@@ -37,11 +37,52 @@ class UserFeedback(object):
         self.form.write('\t'.join(values) + '\n')
         self.form.flush()
 
+# Routes
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def average_satisfaction(self):
+        if cherrypy.request.method != "GET":
+            raise cherrypy.HTTPError(400, "Bad Request")
+
+        average = 0
+        nb = 0
+        with open(FORM_PATH) as f:
+            next(f)
+            for row in f:
+                content = row.split('\t')
+                nb += 1
+                average += float(content[FEEDBACK_TABLE.index("Rate")])
+
+        return {"data": average / nb}
+
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def client_comments(self):
+        if cherrypy.request.method != "GET":
+            raise cherrypy.HTTPError(400, "Bad Request")
+
+        users = []
+        messages = []
+
+        with open(FORM_PATH) as f:
+            next(f)
+            for row in f:
+                content = row.split('\t')
+                users.append(content[FEEDBACK_TABLE.index("User")])
+                messages.append(content[FEEDBACK_TABLE.index("Message")])
+
+        return {"users": users, "messages": messages}
+
     # TO HANDLE A NEW URL CHANGE "urltest"
     @cherrypy.expose
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def urltest(self):
+        if cherrypy.request.method != "GET":
+            raise cherrypy.HTTPError(400, "Bad Request")
+
         print("urltest")
         return {"message": "urltest"}
 
