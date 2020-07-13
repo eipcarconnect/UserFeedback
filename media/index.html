@@ -18,12 +18,25 @@
         le nombre actuel de commentaire est de <span id="nbComs"></span>
 
     <script>
-        getNbCom();
+        getAverageSatisfaction()
 
         function getNbCom()
         {
-            document.getElementById("nbComs").innerHTML = "2";
+            document.getElementById("nbComs").innerHTML = "2"
         }
+
+
+        function getAverageSatisfaction() {
+            var xmlHttp = new XMLHttpRequest()
+            xmlHttp.onload = function () {
+                data = JSON.parse(this.responseText)
+                document.getElementById("nbComs").innerHTML = data["data"]
+            }
+            xmlHttp.open( "GET", "http://127.0.0.1:4242/average_satisfaction", true ) // false for synchronous request
+            xmlHttp.send( null )
+            // return xmlHttp.responseText;
+        }
+
     </script>
 </body>
 </html>
