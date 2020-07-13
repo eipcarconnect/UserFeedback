@@ -19,8 +19,22 @@ class UserFeedback(object):
         if cherrypy.request.method == "POST":
             return self.handle_post(cherrypy.request)
 
-        return '''<meta http-equiv="refresh" content=";URL=https://www.youtube.com/watch?v=dQw4w9WgXcQ">'''
-
+        #return '''<meta http-equiv="refresh" content=";URL=https://www.youtube.com/watch?v=dQw4w9WgXcQ">'''
+        out = """<html>
+               <body>
+               <p>Trier les commentaires par : 
+               <select>
+                   <option value="date">Date de publication</option>
+                   <option value="user">Utilisateur</option>
+                   <option value="platform">Platforme</option>
+                   <option value="rate">Note</option>
+                   <option value="message">Message</option>
+                </select></p>
+                <h2>Commentaires</h2>
+                   Nombre de commentaires: %s<br />
+               </body>
+               </html>"""
+        return out % (0)
     @cherrypy.expose
     def generate(self):
         pass
