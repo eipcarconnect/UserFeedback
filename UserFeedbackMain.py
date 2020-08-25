@@ -99,4 +99,3 @@ if __name__ == '__main__':
         'cors.expose.on': True
     })
     cherrypy.quickstart(UserFeedback())
-    print("alo")
