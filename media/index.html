@@ -3,10 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
+<style>
+    ul {
+            border
+    }
+
+    ul p {
+        width: 25%;
+        padding: 10px;
+        border: solid;
+        border-color: black;
+    }
+
+     .platform {
+         float: right;
+    }
+
+     .date {
+         float: right;
+    }
+
+    .checked {
+        color: orange;
+    }
+</style>
+
+
 <body>
+    <h2>Commentaires : </h2>
     <p>Trier les commentaires par :
-        <select onchange="function f(evt){console.log(evt)}">
+        <select id="category" onchange="changeCategory()">
             <option value="date">Date de publication</option>
             <option value="user">Utilisateur</option>
             <option value="platform">Platforme</option>
@@ -14,18 +43,24 @@
             <option value="message">Message</option>
         </select>
     </p>
-    <h2>Commentaires</h2>
+        <ul id="comments">
+        </ul>
+
+    <h2>Satisfaction : </h2>
         La satifaction moyenne est de: <span id="nbComs"></span> / 5
     <p><button onclick="document.getElementById('comments').innerHTML = '';getAverageSatisfaction(); getComments()">Rafraichir</button></p>
-
-    <ul id="comments">
-    </ul>
-
     <script>
         api_url = "http://127.0.0.1:4242/"
 
+        commentaires = {"1":{"date": "03/08/2020","User": "Monsieur X","Platform": "Apple","Rate": "5","Message": "Très très content, j'adore"}}
         getAverageSatisfaction()
-        getComments()
+        getGusComments()
+
+        function changeCategory() {
+            let category = document.getElementById("category").value;
+            console.log(category);
+            getGusComments();
+        }
 
         function getAverageSatisfaction() {
             let xmlHttp = new XMLHttpRequest()
@@ -37,7 +72,7 @@
             xmlHttp.send( null )
         }
 
-        function getComments() {
+     /*   function getComments() {
             let xmlHttp = new XMLHttpRequest()
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText)
@@ -50,6 +85,39 @@
             }
             xmlHttp.open( "GET", api_url + "client_comments", true )
             xmlHttp.send( null )
+        }*/
+
+        function isInt(n) {
+            return n % 1 === 0;
+        }
+
+        function setStar(rate)
+        {
+            let half = false;
+            if (isInt(rate) == false) {
+                half = true;
+                rate -= 1;
+            }
+            let star = "";
+            for (let i = 0; i < rate; i++)
+                star += "<span class=\"fa fa-star checked\"></span>";
+            if (half == true)
+                star += "<span class=\"fa fa-star-half checked\"></span>";
+            return (star);
+        }
+
+        function getGusComments() {
+            let data = JSON.parse('{"1":{"Date": "03/08/2020","User": "Monsieur X","Platform": "Apple","Rate": "5","Message": "Très très content, j\'adore"},' +
+                '"2":{"Date": "04/08/2020","User": "Monsieur Y","Platform": "Android","Rate": "3.5","Message": "C\'est super !"},' +
+                '"3":{"Date": "01/08/2020","User": "Monsieur Z","Platform": "Apple","Rate": "4","Message": "Mais c\'était sûr en fait c\'était sûr"}}');
+            console.log(Object.keys(data).length);
+            let parent = document.getElementById('comments');
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                let newChild = document.createElement('p');
+                let star = setStar(data[i+1].Rate);
+                newChild.innerHTML = data[i+1].User + "<span class=\"fa fa-" + data[i+1].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i+1].Date + "</span><br/><br/>" + data[i+1].Message;
+                parent.appendChild(newChild)
+            }
         }
 
     </script>
