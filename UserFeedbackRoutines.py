@@ -48,6 +48,7 @@ def graph():
         ax.xaxis.set_major_locator(locator)
 
         plt.plot(x_values, y_values)
+        print("Creating graph")
         plt.savefig('graph.png')
         plt.show()
 
