@@ -149,7 +149,7 @@
                     let newChild = document.createElement('p');
                     let star = setStar(data[i].Rate);
                     setRates(data[i].Rate);
-                    satisfaction += data[i].Rate;
+                    satisfaction = roughScale(satisfaction) + roughScale(data[i].Rate);
                     console.log(satisfaction);
                     newChild.innerHTML = data[i].User + "<span class=\"fa fa-" + data[i].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i].Date + "</span><br/><br/>" + data[i].Message;
                     if (i >= currentComment && i <= currentComment + 4)
