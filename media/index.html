@@ -128,6 +128,7 @@
         function roughScale(x, base) {
             const parsed = parseInt(x, base);
             if (isNaN(parsed)) {
+                console.log("delamerde");
                 return 0;
             }
             return parsed;
