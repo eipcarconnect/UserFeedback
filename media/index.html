@@ -125,9 +125,16 @@
             nbPages.innerHTML = Math.round(commentsNb / 5) + 1;
         }
 
+        function roughScale(x, base) {
+            const parsed = parseInt(x, base);
+            if (isNaN(parsed)) {
+                return 0;
+            }
+            return parsed;
+        }
+
         function getComments() {
             satisfaction = 0;
-            setNbPages(nbComments);
             let parent = document.getElementById('comments');
             while (parent.firstChild) {
                 parent.removeChild(parent.firstChild);
@@ -136,6 +143,7 @@
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
                 nbComments = Object.keys(data).length;
+                setNbPages(nbComments);
                 for (let i = 0; i < data.length; ++i) {
                     let newChild = document.createElement('p');
                     let star = setStar(data[i].Rate);
@@ -169,14 +177,6 @@
             if (half == true)
                 star += "<span class=\"fa fa-star-half checked\"></span>";
             return (star);
-        }
-
-        function roughScale(x, base) {
-            const parsed = parseInt(x, base);
-            if (isNaN(parsed)) {
-                return 0;
-            }
-            return parsed;
         }
 
         function setRates(rate)
