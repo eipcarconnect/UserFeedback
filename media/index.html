@@ -90,14 +90,13 @@
             let category = document.getElementById("category").value;
             let chart = document.getElementById("chartContainer");
             let comments = document.getElementById("commentSection");
-            getRates();
-            setChart();
-            getComments();
             if (category == "rate") {
+                getRates();
+                setChart();
                 chart.hidden = false;
                 comments.hidden = true;
-            }
-            else {
+            } else {
+                getComments();
                 chart.hidden = true;
                 comments.hidden = false;
             }
@@ -225,7 +224,7 @@
                     indexLabelFontSize: 10,
                     indexLabelPlacement: "outside",
                     dataPoints: [
-                        { x: 1, y: rate1 / 2 },
+                        { x: 1, y: rate1 / 2},
                         { x: 2, y: rate2 / 2},
                         { x: 3, y: rate3 / 2},
                         { x: 4, y: rate4 / 2},
