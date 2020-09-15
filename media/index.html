@@ -135,11 +135,12 @@
 
         function getRates()
         {
-            let xmlHttp = new XMLHttpRequest()
+            let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
                 for (let i = 0; i < data.length; ++i) {
-                    setRates(roughScale(data[i].Rate));
+                    console.log(data[i].Rate);
+                    setRates(data[i].Rate);
                 }
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
@@ -152,7 +153,7 @@
             while (parent.firstChild) {
                 parent.removeChild(parent.firstChild);
             }
-            let xmlHttp = new XMLHttpRequest()
+            let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
                 nbComments = Object.keys(data).length;
