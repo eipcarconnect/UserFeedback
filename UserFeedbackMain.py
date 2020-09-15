@@ -78,6 +78,25 @@ class UserFeedback(object):
 
         return {"users": users, "messages": messages}
 
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def data_json(self):
+        if cherrypy.request.method != "GET":
+            raise cherrypy.HTTPError(400, "Bad Request")
+
+        datas = []
+
+        with open(FORM_PATH) as f:
+            next(f)
+            for row in f:
+                content = row.split('\t')
+                data = {}
+                for column in FEEDBACK_TABLE:
+                    data[column] = content[FEEDBACK_TABLE.index(column)]
+
+        return datas
+
     # TO HANDLE A NEW URL CHANGE "urltest"
     @cherrypy.expose
     @cherrypy.tools.json_in()
