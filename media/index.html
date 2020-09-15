@@ -122,7 +122,7 @@
             let currentPage = document.getElementById("currentPage");
             currentPage.innerHTML = (currentComment / 5) + 1;
             let nbPages = document.getElementById("nbPages");
-            nbPages.innerHTML = Math.round(commentsNb / 5) + 1;
+            nbPages.innerHTML = Math.round(commentsNb / 5);
         }
 
         function roughScale(x, base) {
@@ -155,7 +155,7 @@
                 }
             }
             let globalrate = document.getElementById("satisfaction");
-            globalrate.innerHTML = (satisfaction / nbComments).toFixed(1);
+            globalrate.innerHTML = (roughScale(satisfaction / nbComments), 0).toFixed(1);
             xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null );
         }
