@@ -93,7 +93,7 @@
             if (category == "rate") {
                 chart.hidden = false;
                 comments.hidden = true;
-                getComments();
+                getRates();
                 setChart()
             }
             else {
@@ -132,6 +132,19 @@
                 return 0;
             }
             return parsed;
+        }
+
+        function getRates()
+        {
+            let xmlHttp = new XMLHttpRequest()
+            xmlHttp.onload = function () {
+                let data = JSON.parse(this.responseText);
+                for (let i = 0; i < data.length; ++i) {
+                    setRates(roughScale(data[i].Rate));
+                }
+            }
+            xmlHttp.open( "GET", api_url + "data_json", true )
+            xmlHttp.send( null );
         }
 
         function getComments() {
