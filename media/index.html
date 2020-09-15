@@ -87,6 +87,7 @@
         changeCategory();
 
         function changeCategory() {
+            getComments();
             let category = document.getElementById("category").value;
             let chart = document.getElementById("chartContainer");
             let comments = document.getElementById("commentSection");
@@ -98,7 +99,6 @@
             else {
                 chart.hidden = true;
                 comments.hidden = false;
-                getComments();
             }
         }
 
