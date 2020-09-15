@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Index</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 
 <style>
@@ -49,7 +49,7 @@
         <ul id="comments"></ul>
         </ul>
 
-    <div id="chartContainer" style="height: 370px; width: 100%;">test</div>
+    <div id="chartContainer" style="height: 370px; width: 100%;">   </div>
 
 </body>
 
@@ -155,9 +155,7 @@
                         parent.appendChild(newChild)
                 }
                 let globalrate = document.getElementById("satisfaction");
-                console.log(satisfaction);
                 let globalRateValue = (roughScale(satisfaction) / roughScale(nbComments)).toFixed(1);
-                console.log(globalRateValue);
                 globalrate.innerHTML = globalRateValue;
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
