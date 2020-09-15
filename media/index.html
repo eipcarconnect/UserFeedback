@@ -132,7 +132,7 @@
             setNbPages(nbComments);
             let parent = document.getElementById('comments');
             while (parent.firstChild) {
-            parent.removeChild(parent.firstChild);
+                parent.removeChild(parent.firstChild);
             }
             let data = JSON.parse(commentaires);
             nbComments = Object.keys(data).length;
@@ -150,10 +150,15 @@
         }
 
         function getComments() {
+            satisfaction = 0;
+            setNbPages(nbComments);
+            let parent = document.getElementById('comments');
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
             let xmlHttp = new XMLHttpRequest()
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
-                let parent = document.getElementById('comments');
                 for (let i = 0; i < data.length; ++i) {
                     let newChild = document.createElement('p');
                     let star = setStar(data[i+1].Rate);
