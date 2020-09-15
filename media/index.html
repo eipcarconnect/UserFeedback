@@ -154,9 +154,9 @@
                     if (i >= currentComment && i <= currentComment + 4)
                         parent.appendChild(newChild)
                 }
-                console.log(satisfaction);
                 let globalrate = document.getElementById("satisfaction");
-                globalrate.innerHTML = (roughScale(satisfaction / nbComments), 0).toFixed(1);
+                let globalRateValue = (roughScale(roughScale(satifaction) / roughScale(nbComments))).toFixed(1);
+                globalrate.innerHTML = globalRateValue;
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null );
