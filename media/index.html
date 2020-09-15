@@ -130,6 +130,7 @@
 
         function getRates()
         {
+            satisfaction = 0;
             rate1 = rate2 = rate3 = rate4 = rate5 = 0;
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
@@ -222,11 +223,11 @@
                     indexLabelFontSize: 10,
                     indexLabelPlacement: "outside",
                     dataPoints: [
-                        { x: 1, y: rate1 / 2},
-                        { x: 2, y: rate2 / 2},
-                        { x: 3, y: rate3 / 2},
-                        { x: 4, y: rate4 / 2},
-                        { x: 5, y: rate5 / 2}
+                        { x: 1, y: rate1},
+                        { x: 2, y: rate2},
+                        { x: 3, y: rate3},
+                        { x: 4, y: rate4},
+                        { x: 5, y: rate5}
                     ]
                 }]
             });
