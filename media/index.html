@@ -159,7 +159,9 @@
             let xmlHttp = new XMLHttpRequest()
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
+                nbComments = Object.keys(data).length;
                 for (let i = 0; i < data.length; ++i) {
+                    satisfaction = roughScale(satisfaction, 0) + roughScale(data[i+1].Rate, 0);
                     let newChild = document.createElement('p');
                     let star = setStar(data[i+1].Rate);
                     setRates(data[i+1].Rate);
