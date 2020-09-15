@@ -113,7 +113,7 @@
         }
 
         function changeCurrentComment(value) {
-            if (currentComment + value >= 0 && currentComment + value <= nbComments)
+            if (currentComment + value >= 0 && currentComment + value < nbComments)
             currentComment += value;
             getComments();
         }
