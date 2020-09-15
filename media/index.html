@@ -155,7 +155,8 @@
                         parent.appendChild(newChild)
                 }
                 let globalrate = document.getElementById("satisfaction");
-                let globalRateValue = (roughScale(roughScale(satifaction) / roughScale(nbComments))).toFixed(1);
+                let globalRateValue = (roughScale(roughScale(satisfaction) / roughScale(nbComments))).toFixed(1);
+                console.log(globalRateValue);
                 globalrate.innerHTML = globalRateValue;
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
