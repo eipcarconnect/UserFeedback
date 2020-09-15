@@ -46,8 +46,8 @@
         <button onclick="changeCurrentComment(5)">+</button>
         <span id="currentPage"></span> /
         <span id="nbPages"></span>
-        </ul>
         <ul id="comments"></ul>
+        </ul>
 
     <div id="chartContainer" style="height: 370px; width: 100%;">test</div>
 
@@ -130,14 +130,13 @@
         function getComments() {
             let xmlHttp = new XMLHttpRequest()
             xmlHttp.onload = function () {
-                console.log(this.responseText);
-                let data = JSON.parse(this.responseText)
-                let parent = document.getElementById('comments')
-                for (let i = 0; i < data["users"].length; ++i) {
-                   // let newChild = document.createElement('p')
-                 //   newChild.textContent = data["users"][i] + ":\t" + data["messages"][i]
-                    console.log(data["users"][i] + ":\t" + data["messages"][i]);
-                    //parent.appendChild(newChild)
+                let data = JSON.parse(this.responseText);
+                let parent = document.getElementById('comments');
+                for (let i = 0; i < data.length; ++i) {
+                    console.log(data[i].User);
+                    let newChild = document.createElement('p')
+                    newChild.textContent = data["users"][i] + ":\t" + data["messages"][i]
+                    parent.appendChild(newChild)
                 }
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
