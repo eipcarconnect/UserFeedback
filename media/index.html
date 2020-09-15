@@ -30,7 +30,7 @@
 
 
 <body>
-    <h2>TEST Satisfaction : </h2>
+    <h2>Satisfaction : </h2>
     La satifaction moyenne est de: <b><span id="satisfaction"></span> / 5</b>
     <h2>Commentaires : </h2>
     <p>Trier les commentaires par :
@@ -41,7 +41,7 @@
             <option value="rate">Note</option>
         </select>
     </p>
-        <ul>
+        <ul id="commentSection">
         <button onclick="changeCurrentComment(-5)">-</button>
         <button onclick="changeCurrentComment(5)">+</button>
         <span id="currentPage"></span> /
@@ -54,7 +54,7 @@
 </body>
 
     <script>
-        api_url = "http://13.79.21.93/data_json"
+        api_url = "http://13.79.21.93/"
         rate1 = 0;
         rate2 = 0;
         rate3 = 0;
@@ -91,7 +91,7 @@
         function changeCategory() {
             let category = document.getElementById("category").value;
             let chart = document.getElementById("chartContainer");
-            let comments = document.getElementById("comments");
+            let comments = document.getElementById("commentSection");
             if (category == "rate") {
                 chart.hidden = false;
                 comments.hidden = true;
@@ -110,7 +110,7 @@
                 let data = JSON.parse(this.responseText)
                 document.getElementById("nbComs").innerHTML = data["data"]
             }
-            xmlHttp.open( "GET", api_url + "average_satisfaction", true )
+            xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null )
         }
 
@@ -130,6 +130,7 @@
         function getComments() {
             let xmlHttp = new XMLHttpRequest()
             xmlHttp.onload = function () {
+                console.log(this.responseText);
                 let data = JSON.parse(this.responseText)
                 let parent = document.getElementById('comments')
                 for (let i = 0; i < data["users"].length; ++i) {
@@ -139,7 +140,7 @@
                     //parent.appendChild(newChild)
                 }
             }
-            xmlHttp.open( "GET", api_url, true );
+            xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null );
         }
 
