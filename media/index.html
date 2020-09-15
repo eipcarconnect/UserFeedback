@@ -85,7 +85,7 @@
                 '"20":{"Date": "14/09/2020","User": "Anne Elisabeth de Trogoff","Platform": "Android","Rate": "4","Message": "il y a encore des choses à améliorer pour attendre l’application avec le plus d’utilité mais c’est un outil qui à l’air fiable et qui est de plus intuitif et appréciable."},' +
                 '"21":{"Date": "14/09/2020","User": "Maxence Buisine","Platform": "Android","Rate": "3.5","Message": "l’application n’est pas encore finie de manière technique, cela impacte un peu le coté visuel qui fait très décoration malgré des couleurs bien choisies et des bonnes idées de fonctionnalités. Le résultat final me fera surement changer d’avis"}}';
         changeCategory();
-        getGusComments();
+        //getGusComments();
         getComments();
 
         function changeCategory() {
@@ -100,7 +100,7 @@
             else {
                 chart.hidden = true;
                 comments.hidden = false;
-                getGusComments();
+                getComments();
             }
         }
 
@@ -117,7 +117,7 @@
         function changeCurrentComment(value) {
             if (currentComment + value >= 0 && currentComment + value <= nbComments)
             currentComment += value;
-            getGusComments();
+            getComments();
         }
 
         function setNbPages(commentsNb) {
@@ -145,6 +145,8 @@
                 if (i >= currentComment && i <= currentComment + 4)
                     parent.appendChild(newChild)
             }
+            let globalrate = document.getElementById("satisfaction");
+            globalrate.innerHTML = (satisfaction / nbComments).toFixed(1);
         }
 
         function getComments() {
