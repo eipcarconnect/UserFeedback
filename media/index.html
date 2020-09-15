@@ -55,11 +55,7 @@
 
     <script>
         api_url = "http://13.79.21.93/"
-        rate1 = 0;
-        rate2 = 0;
-        rate3 = 0;
-        rate4 = 0;
-        rate5 = 0;
+        rate1 = rate2 = rate3 = rate4 = rate5 = 0;
         nbComments = 0;
         currentComment = 0;
         satisfaction = 0;
@@ -92,7 +88,6 @@
             let comments = document.getElementById("commentSection");
             if (category == "rate") {
                 getRates();
-                setChart();
                 chart.hidden = false;
                 comments.hidden = true;
             } else {
@@ -135,12 +130,14 @@
 
         function getRates()
         {
+            rate1 = rate2 = rate3 = rate4 = rate5 = 0;
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
                 for (let i = 0; i < data.length; ++i) {
                     console.log(data[i].Rate);
                     setRates(data[i].Rate);
+                    setChart();
                 }
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
