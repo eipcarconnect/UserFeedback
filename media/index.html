@@ -122,7 +122,7 @@
             let currentPage = document.getElementById("currentPage");
             currentPage.innerHTML = (currentComment / 5) + 1;
             let nbPages = document.getElementById("nbPages");
-            nbPages.innerHTML = Math.round(commentsNb / 5);
+            nbPages.innerHTML = Math.round(commentsNb / 5) + 1;
         }
 
         function roughScale(x, base) {
@@ -147,6 +147,7 @@
                 for (let i = 0; i < data.length; ++i) {
                     let newChild = document.createElement('p');
                     let star = setStar(data[i].Rate);
+                    console.log(data[i].Rate)
                     setRates(data[i].Rate);
                     satisfaction = roughScale(satisfaction, 0) + roughScale(data[i].Rate, 0);
                     newChild.innerHTML = data[i].User + "<span class=\"fa fa-" + data[i].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i].Date + "</span><br/><br/>" + data[i].Message;
