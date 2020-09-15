@@ -135,6 +135,7 @@
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
+                nbComments = Object.keys(data).length;
                 for (let i = 0; i < data.length; ++i) {
                     satisfaction = roughScale(satisfaction) + roughScale(data[i].Rate);
                     setRates(data[i].Rate);
