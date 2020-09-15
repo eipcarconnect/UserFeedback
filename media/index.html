@@ -40,20 +40,46 @@
             <option value="user">Utilisateur</option>
             <option value="platform">Platforme</option>
             <option value="rate">Note</option>
-            <option value="message">Message</option>
         </select>
     </p>
+        <ul>
+        <button onclick="changeCurrentComment(-5)">-</button>
+        <button onclick="changeCurrentComment(5)">+</button>
+        <span id="currentPage"></span> /
+        <span id="nbPages"></span>
+        </ul>
         <ul id="comments">
         </ul>
-
     <h2>Satisfaction : </h2>
-        La satifaction moyenne est de: <span id="nbComs"></span> / 5
+        La satifaction moyenne est de: <span id="satisfaction"></span> / 5
     <p><button onclick="document.getElementById('comments').innerHTML = '';getAverageSatisfaction(); getComments()">Rafraichir</button></p>
     <script>
         api_url = "http://127.0.0.1:4242/"
-
-        commentaires = {"1":{"date": "03/08/2020","User": "Monsieur X","Platform": "Apple","Rate": "5","Message": "Très très content, j'adore"}}
-        getAverageSatisfaction()
+        nbComments = 0;
+        currentComment = 0;
+        satisfaction = 0;
+        commentaires = '{"1":{"Date": "10/09/2020","User": "Philippe Leconte","Platform": "Android","Rate": "4","Message": "c’est une très belle application, avec des fonctionnalités utiles pours les utilisateurs réguliers de leurs véhicules."},' +
+                '"2":{"Date": "10/09/2020","User": "Béatrice Leconte","Platform": "Android","Rate": "4","Message": "l’application est facile d’utilisation et les fonctionnalités sont intéressantes. Une chose à ajouter peut etre une explication de l’utilisation du boitier."},' +
+                '"3":{"Date": "10/09/2020","User": "Vladimir Drouin","Platform": "Android","Rate": "3.5","Message": "Beaucoup de fonctionnalités interessantes mais en attentes de développement plus profond.' + 'Une  application facile à utiliser et agréable dans le fonctionnement."},' +
+                '"4":{"Date": "11/09/2020","User": "Vanessa Salam","Platform": "Android","Rate": "4.5","Message": "Application très intuitive et avec des fonctionnalités intéressantes et bien indiquées."},' +
+                '"5":{"Date": "11/09/2020","User": "Marc Antoine Leconte","Platform": "Android","Rate": "3.5","Message": "Application utile pour une utilité professionnelle, un visuel agréable, hate de voir la suite"},' +
+                '"6":{"Date": "12/09/2020","User": "Arthur Lamy","Platform": "Android","Rate": "4.5","Message": "Une application très belle et très fluide. On comprends facilement les possibilités et prendre l’habitude de l’utiliser ne fera qu’accentuer cela. "},' +
+                '"7":{"Date": "12/09/2020","User": "Matthieu Chevallier","Platform": "Android","Rate": "4.5","Message": "l’application reprends les codes des applications utilisées aujourd’hui, elle est donc facile d’utilisation et rapide de prise en main."},' +
+                '"8":{"Date": "12/09/2020","User": "Ludovic Bard","Platform": "Android","Rate": "4","Message": "l’application est utile dans le cadre professionnel dans des endroits que nous ne conaissons pas. Les fonctionnalités permettent un controle à distance de l’état du véhicule. Néamoins il manque une fonctionnalité pour partager ce controle avec d’autres utilisateurs au sein d’un groupe"},' +
+                '"9":{"Date": "12/09/2020","User": "François de Bastard","Platform": "Android","Rate": "3","Message": "L’application est un peu sombre et permet seulement un controle peut poussé. Visuellement j’ai eu du mal avec certaines fonctionnalités en ne comprennant pas comment les utiliser : déplacement, changer ses informations."},' +
+                '"10":{"Date": "12/09/2020","User": "Arthus Desbonnet","Platform": "Android","Rate": "4","Message": "J’ai eu du mal au début mais on s’habitue vite aux couleurs et à l’emplacement des différentes fonctionnalités. "},' +
+                '"11":{"Date": "12/09/2020","User": "Thomas de Bastard","Platform": "Android","Rate": "4","Message": "Visuellement l’application est très réussie. Mais techniquement j’aimerais pouvoir la tester sur mon véhicule pour voir ce qu’il en est."},' +
+                '"12":{"Date": "12/09/2020","User": "Clementin Besson","Platform": "Android","Rate": "4","Message": "l’application est agréable et intuitive. De quoi la personnaliser visuellement serait un plus agréable"},' +
+                '"13":{"Date": "12/09/2020","User": "Arthur Perrier","Platform": "Android","Rate": "4.5","Message": "Une application utile et visuellement très propre."},' +
+                '"14":{"Date": "12/09/2020","User": "Aymeric Guétin","Platform": "Android","Rate": "3.5","Message": "L’application appelle au controle mais est au final un tableau avec l’affichage de toutes nos données. Néamoins un visuel agréable et permettant de se retrouver facilement au milieu de toutes ces informations présentes."},' +
+                '"15":{"Date": "13/09/2020","User": "Jeanne Pages","Platform": "Android","Rate": "5","Message": "Une application très jolie et très claire."},' +
+                '"16":{"Date": "13/09/2020","User": "Sophie Pages","Platform": "Android","Rate": "4","Message": "C’est une application facile d’accès et attirante. j’espère que les fonctionnalités seront bientot testables sur véhicule pour tous"},' +
+                '"17":{"Date": "13/09/2020","User": "Hélie d\'hautefeuille","Platform": "Android","Rate": "3","Message": "L’application est visuellement propre sur énormément de chose mais j’aimerais voir des couleurs plus claire, et certaines pages telle que celle de klaxon me semblent un peu vide "},' +
+                '"18":{"Date": "13/09/2020","User": "Léna Klein","Platform": "Android","Rate": "4.5","Message": "J’aime bien les couleurs et comment sont ammenées les différentes fonctionnalités. Certaines ne me semblent pas importantes de manière personnelle."},' +
+                '"19":{"Date": "15/09/2020","User": "Philippe Guérineaud","Platform": "Android","Rate": "3","Message": "l’application propose pleins de fonctionnalités très interessantes mais aujourd’hui incapables d’etre testées. Le visuel est beau et l’utilisation facile. "},' +
+                '"20":{"Date": "15/09/2020","User": "Anne Elisabeth de Trogoff","Platform": "Android","Rate": "4","Message": "il y a encore des choses à améliorer pour attendre l’application avec le plus d’utilité mais c’est un outil qui à l’air fiable et qui est de plus intuitif et appréciable."},' +
+                '"21":{"Date": "15/09/2020","User": "Maxence Buisine","Platform": "Android","Rate": "3.5","Message": "l’application n’est pas encore finie de manière technique, cela impacte un peu le coté visuel qui fait très décoration malgré des couleurs bien choisies et des bonnes idées de fonctionnalités. Le résultat final me fera surement changer d’avis"}}';
+        //getAverageSatisfaction()
         getGusComments()
 
         function changeCategory() {
@@ -70,6 +96,19 @@
             }
             xmlHttp.open( "GET", api_url + "average_satisfaction", true )
             xmlHttp.send( null )
+        }
+
+        function changeCurrentComment(value) {
+            if (currentComment + value >= 0 && currentComment + value <= nbComments)
+            currentComment += value;
+            getGusComments();
+        }
+
+        function setNbPages(commentsNb) {
+            let currentPage = document.getElementById("currentPage");
+            currentPage.innerHTML = (currentComment / 5) + 1;
+            let nbPages = document.getElementById("nbPages");
+            nbPages.innerHTML = Math.round(commentsNb / 5) + 1;
         }
 
      /*   function getComments() {
@@ -106,18 +145,76 @@
             return (star);
         }
 
+        function roughScale(x, base) {
+            const parsed = parseInt(x, base);
+            if (isNaN(parsed)) {
+                return 0;
+            }
+            return parsed;
+        }
+
+        function sortTable(tab) {
+          let shouldSwitch;
+          let i;
+          let table = tab;
+          let switching = true;
+          while (switching) {
+            switching = false;
+            console.log("comments = " + nbComments);
+            for (i = 0; i < nbComments; i++) {
+              shouldSwitch = false;
+              console.log(Object.keys(table)[3]);
+              let x = Object.keys(table)[i];
+              let y = Object.keys(table)[i + 1];
+              if (x.toLowerCase() > y.toLowerCase()) {
+                shouldSwitch = false;
+                break;
+              }
+            }
+            if (shouldSwitch) {
+                let tmp = Object.keys(table)[i];
+                Object.keys(table)[i] = Object.keys(table)[i + 1];
+                Object.keys(table)[i + 1] = tmp;
+                switching = true;
+            }
+          }
+        }
+
+        function sorted(tab)
+        {
+            let newTab = tab;
+            sortTable(newTab);
+            let category = document.getElementById("category");
+            if (category == "user") {
+                console.log(user);
+            } else if (category == "platform") {
+                document.getElementById('comments').hidden = true;
+            } else if (category == "rate") {
+                console.log(rate);
+            }
+            return (newTab);
+        }
+
         function getGusComments() {
-            let data = JSON.parse('{"1":{"Date": "03/08/2020","User": "Monsieur X","Platform": "Apple","Rate": "5","Message": "Très très content, j\'adore"},' +
-                '"2":{"Date": "04/08/2020","User": "Monsieur Y","Platform": "Android","Rate": "3.5","Message": "C\'est super !"},' +
-                '"3":{"Date": "01/08/2020","User": "Monsieur Z","Platform": "Apple","Rate": "4","Message": "Mais c\'était sûr en fait c\'était sûr"}}');
-            console.log(Object.keys(data).length);
+            satisfaction = 0;
+            setNbPages(nbComments);
             let parent = document.getElementById('comments');
+            while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+            }
+            let data = JSON.parse(commentaires);
+            data = sorted(data);
+            nbComments = Object.keys(data).length;
             for (let i = 0; i < Object.keys(data).length; i++) {
+                satisfaction = roughScale(satisfaction, 0) + roughScale(data[i+1].Rate, 0);
                 let newChild = document.createElement('p');
                 let star = setStar(data[i+1].Rate);
                 newChild.innerHTML = data[i+1].User + "<span class=\"fa fa-" + data[i+1].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i+1].Date + "</span><br/><br/>" + data[i+1].Message;
-                parent.appendChild(newChild)
+                if (i >= currentComment && i <= currentComment + 4)
+                    parent.appendChild(newChild)
             }
+            let globalrate = document.getElementById("satisfaction");
+            globalrate.innerHTML = (satisfaction / nbComments).toFixed(1);
         }
 
     </script>
