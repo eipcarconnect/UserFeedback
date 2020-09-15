@@ -90,14 +90,14 @@
             let category = document.getElementById("category").value;
             let chart = document.getElementById("chartContainer");
             let comments = document.getElementById("commentSection");
+            getRates();
+            setChart();
+            getComments();
             if (category == "rate") {
                 chart.hidden = false;
                 comments.hidden = true;
-                getRates();
-                setChart()
             }
             else {
-                getComments();
                 chart.hidden = true;
                 comments.hidden = false;
             }
