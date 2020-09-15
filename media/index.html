@@ -87,16 +87,17 @@
         changeCategory();
 
         function changeCategory() {
-            getComments();
             let category = document.getElementById("category").value;
             let chart = document.getElementById("chartContainer");
             let comments = document.getElementById("commentSection");
             if (category == "rate") {
                 chart.hidden = false;
                 comments.hidden = true;
+                getComments();
                 setChart()
             }
             else {
+                getComments();
                 chart.hidden = true;
                 comments.hidden = false;
             }
@@ -128,7 +129,6 @@
         function roughScale(x, base) {
             const parsed = parseInt(x, base);
             if (isNaN(parsed)) {
-                console.log("delamerde");
                 return 0;
             }
             return parsed;
@@ -212,11 +212,11 @@
                     indexLabelFontSize: 10,
                     indexLabelPlacement: "outside",
                     dataPoints: [
-                        { x: 1, y: rate1 },
-                        { x: 2, y: rate2 },
-                        { x: 3, y: rate3 },
-                        { x: 4, y: rate4 },
-                        { x: 5, y: rate5 }
+                        { x: 1, y: rate1 / 2 },
+                        { x: 2, y: rate2 / 2},
+                        { x: 3, y: rate3 / 2},
+                        { x: 4, y: rate4 / 2},
+                        { x: 5, y: rate5 / 2}
                     ]
                 }]
             });
