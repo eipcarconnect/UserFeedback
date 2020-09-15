@@ -161,11 +161,11 @@
                 let data = JSON.parse(this.responseText);
                 nbComments = Object.keys(data).length;
                 for (let i = 0; i < data.length; ++i) {
-                    satisfaction = roughScale(satisfaction, 0) + roughScale(data[i+1].Rate, 0);
+                    satisfaction = roughScale(satisfaction, 0) + roughScale(data[i].Rate, 0);
                     let newChild = document.createElement('p');
-                    let star = setStar(data[i+1].Rate);
-                    setRates(data[i+1].Rate);
-                    newChild.innerHTML = data[i+1].User + "<span class=\"fa fa-" + data[i+1].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i+1].Date + "</span><br/><br/>" + data[i+1].Message;
+                    let star = setStar(data[i].Rate);
+                    setRates(data[i].Rate);
+                    newChild.innerHTML = data[i].User + "<span class=\"fa fa-" + data[i].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i].Date + "</span><br/><br/>" + data[i].Message;
                     if (i >= currentComment && i <= currentComment + 4)
                         parent.appendChild(newChild)
                 }
