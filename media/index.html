@@ -62,7 +62,7 @@
         rate5 = 0;
         nbComments = 0;
         currentComment = 0;
-        satisfaction = 1000;
+        satisfaction = 0;
         commentaires = '{"1":{"Date": "10/09/2020","User": "Philippe Leconte","Platform": "Android","Rate": "4","Message": "c’est une très belle application, avec des fonctionnalités utiles pours les utilisateurs réguliers de leurs véhicules."},' +
                 '"2":{"Date": "10/09/2020","User": "Béatrice Leconte","Platform": "Android","Rate": "4","Message": "l’application est facile d’utilisation et les fonctionnalités sont intéressantes. Une chose à ajouter peut etre une explication de l’utilisation du boitier."},' +
                 '"3":{"Date": "10/09/2020","User": "Vladimir Drouin","Platform": "Android","Rate": "3.5","Message": "Beaucoup de fonctionnalités interessantes mais en attentes de développement plus profond.' + 'Une  application facile à utiliser et agréable dans le fonctionnement."},' +
@@ -134,8 +134,14 @@
             return parsed;
         }
 
-        function getComments() {
+        function getSatisfaction()
+        {
             satisfaction = 0;
+            let globalrate = document.getElementById("satisfaction");
+            globalrate.innerHTML = (roughScale(satisfaction / nbComments), 0).toFixed(1);
+        }
+
+        function getComments() {
             let parent = document.getElementById('comments');
             while (parent.firstChild) {
                 parent.removeChild(parent.firstChild);
@@ -150,13 +156,11 @@
                     let star = setStar(data[i].Rate);
                     console.log(data[i].Rate)
                     setRates(data[i].Rate);
-                    satisfaction = roughScale(satisfaction, 0) + roughScale(data[i].Rate, 0);
+                    satisfaction += data[i].Rate;
                     newChild.innerHTML = data[i].User + "<span class=\"fa fa-" + data[i].Platform.toLowerCase() + " platform\"></span><br/>" + star + "<span class=\"date\">" + data[i].Date + "</span><br/><br/>" + data[i].Message;
                     if (i >= currentComment && i <= currentComment + 4)
                         parent.appendChild(newChild)
                 }
-                let globalrate = document.getElementById("satisfaction");
-                globalrate.innerHTML = (roughScale(satisfaction / nbComments), 0).toFixed(1);
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null );
