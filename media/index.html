@@ -54,7 +54,7 @@
 </body>
 
     <script>
-        api_url = "http://13.79.21.93/client_comments"
+        api_url = "http://13.79.21.93/data_json"
         rate1 = 0;
         rate2 = 0;
         rate3 = 0;
@@ -139,8 +139,8 @@
                     //parent.appendChild(newChild)
                 }
             }
-            xmlHttp.open( "GET", api_url + "client_comments", true )
-            xmlHttp.send( null )
+            xmlHttp.open( "GET", api_url, true );
+            xmlHttp.send( null );
         }
 
         function isInt(n) {
