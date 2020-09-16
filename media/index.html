@@ -151,15 +151,20 @@
 
         function getPlatforms()
         {
+            satisfaction = 0;
             nbApple = nbAndroid = nbWeb = 0;
-            getRates();
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
+                nbComments = Object.keys(data).length;
                 for (let i = 0; i < data.length; ++i) {
+                    satisfaction = roughScale(satisfaction) + roughScale(data[i].Rate);
                     setPlatform(data[i].platform);
                 }
                 setPlatformChart();
+                let globalrate = document.getElementById("satisfaction");
+                let globalRateValue = (roughScale(satisfaction) / roughScale(nbComments)).toFixed(1);
+                globalrate.innerHTML = globalRateValue;
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null );
