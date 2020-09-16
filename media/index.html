@@ -36,7 +36,7 @@
     <p>Trier les commentaires par :
         <select id="category" onchange="changeCategory()">
             <option value="date">Date de publication</option>
-            <option value="user">Utilisateur</option>
+        <!–– <option value="user">Utilisateur</option> -->
             <option value="platform">Platforme</option>
             <option value="rate">Note</option>
         </select>
@@ -49,13 +49,15 @@
         <ul id="comments"></ul>
         </ul>
 
-    <div id="chartContainer" style="height: 370px; width: 100%;">   </div>
+    <div id="rateChartContainer" style="height: 370px; width: 100%;">   </div>
+    <div id="platformChartContainer" style="height: 370px; width: 100%;">   </div>
 
 </body>
 
     <script>
         api_url = "http://13.79.21.93/"
         rate1 = rate2 = rate3 = rate4 = rate5 = 0;
+        nbApple = nbAndroid = nbWeb = 0;
         nbComments = 0;
         currentComment = 0;
         satisfaction = 0;
@@ -84,27 +86,25 @@
 
         function changeCategory() {
             let category = document.getElementById("category").value;
-            let chart = document.getElementById("chartContainer");
+            let rateChart = document.getElementById("rateChartContainer");
+            let platformChart = document.getElementById("platformChartContainer");
             let comments = document.getElementById("commentSection");
             if (category == "rate") {
                 getRates();
-                chart.hidden = false;
+                rateChart.hidden = false;
+                platformChart.hidden = true;
+                comments.hidden = true;
+            } else if (category == "platform") {
+                getPlatforms();
+                rateChart.hidden = false;
+                platformChart.hidden = true;
                 comments.hidden = true;
             } else {
                 getComments();
-                chart.hidden = true;
+                rateChart.hidden = true;
+                platformChart.hidden = true;
                 comments.hidden = false;
             }
-        }
-
-        function getAverageSatisfaction() {
-            let xmlHttp = new XMLHttpRequest()
-            xmlHttp.onload = function () {
-                let data = JSON.parse(this.responseText)
-                document.getElementById("nbComs").innerHTML = data["data"]
-            }
-            xmlHttp.open( "GET", api_url + "data_json", true )
-            xmlHttp.send( null )
         }
 
         function changeCurrentComment(value) {
@@ -128,9 +128,8 @@
             return parsed;
         }
 
-        function getRates()
+         function getRates()
         {
-            satisfaction = 0;
             rate1 = rate2 = rate3 = rate4 = rate5 = 0;
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
@@ -140,10 +139,26 @@
                     satisfaction = roughScale(satisfaction) + roughScale(data[i].Rate);
                     setRates(data[i].Rate);
                 }
-                setChart();
+                setRateChart();
                 let globalrate = document.getElementById("satisfaction");
                 let globalRateValue = (roughScale(satisfaction) / roughScale(nbComments)).toFixed(1);
                 globalrate.innerHTML = globalRateValue;
+            }
+            xmlHttp.open( "GET", api_url + "data_json", true )
+            xmlHttp.send( null );
+        }
+
+        function getPlatforms()
+        {
+            satisfaction = 0;
+            nbApple = nbAndroid = nbWeb = 0;
+            let xmlHttp = new XMLHttpRequest();
+            xmlHttp.onload = function () {
+                let data = JSON.parse(this.responseText);
+                for (let i = 0; i < data.length; ++i) {
+                    setPlatform(data[i].platform);
+                }
+                setPlatformChart();
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
             xmlHttp.send( null );
@@ -196,6 +211,17 @@
             return (star);
         }
 
+        function setPlatform(platform)
+        {
+            if (platform == "Apple")
+                nbApple += 1;
+            else if (platform == "Android")
+                nbAndroid += 1;
+            else if (platform == "Web")
+                nbWeb += 1;
+        }
+
+
         function setRates(rate)
         {
             if (Math.round(rate) == 1)
@@ -210,7 +236,7 @@
                 rate5 += 1;
         }
 
-        function setChart() {
+        function setRateChart() {
             let chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 exportEnabled: true,
@@ -232,6 +258,32 @@
                         { x: 3, y: rate3},
                         { x: 4, y: rate4},
                         { x: 5, y: rate5}
+                    ]
+                }]
+            });
+            chart.render();
+        }
+
+        function setPlatformChart() {
+            let chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                exportEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Platforme sur lesquels les commentaires sont laissés."
+                },
+                axisY: {
+                  includeZero: true
+                },
+                data: [{
+                    type: "column",
+                    indexLabelFontColor: "#5A5757",
+                    indexLabelFontSize: 10,
+                    indexLabelPlacement: "outside",
+                    dataPoints: [
+                        { x: 1, y: nbApple, indexLabel:"APPLE"},
+                        { x: 2, y: nbAndroid, indexLabel:"ANDROID"},
+                        { x: 3, y: nbWeb,indexLabel:"WEB"},
                     ]
                 }]
             });
