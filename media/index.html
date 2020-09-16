@@ -96,8 +96,8 @@
                 comments.hidden = true;
             } else if (category == "platform") {
                 getPlatforms();
-                rateChart.hidden = false;
-                platformChart.hidden = true;
+                rateChart.hidden = true;
+                platformChart.hidden = false;
                 comments.hidden = true;
             } else {
                 getComments();
@@ -159,9 +159,6 @@
                 for (let i = 0; i < data.length; ++i) {
                     setPlatform(data[i].platform);
                 }
-                console.log(nbApple);
-                console.log(nbAndroid);
-                console.log(nbWeb);
                 setPlatformChart();
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
@@ -217,11 +214,11 @@
 
         function setPlatform(platform)
         {
-            if (platform == "Apple")
+            if (platform.toLowerCase() == "apple")
                 nbApple += 1;
-            else if (platform == "Android")
+            else if (platform.toLowerCase() == "android")
                 nbAndroid += 1;
-            else if (platform == "Web")
+            else if (platform.toLowerCase() == "web")
                 nbWeb += 1;
         }
 
