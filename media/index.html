@@ -130,6 +130,7 @@
 
          function getRates()
         {
+            satisfaction = 0;
             rate1 = rate2 = rate3 = rate4 = rate5 = 0;
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
@@ -150,14 +151,17 @@
 
         function getPlatforms()
         {
-            satisfaction = 0;
             nbApple = nbAndroid = nbWeb = 0;
+            console.log("slt");
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
                 for (let i = 0; i < data.length; ++i) {
                     setPlatform(data[i].platform);
                 }
+                console.log(nbApple);
+                console.log(nbAndroid);
+                console.log(nbWeb);
                 setPlatformChart();
             }
             xmlHttp.open( "GET", api_url + "data_json", true )
