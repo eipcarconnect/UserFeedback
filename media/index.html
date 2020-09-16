@@ -159,6 +159,7 @@
                 nbComments = Object.keys(data).length;
                 for (let i = 0; i < data.length; ++i) {
                     satisfaction = roughScale(satisfaction) + roughScale(data[i].Rate);
+                    console.log(data[i].platform);
                     setPlatform(data[i].platform);
                 }
                 setPlatformChart();
