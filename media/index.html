@@ -152,7 +152,7 @@
         function getPlatforms()
         {
             nbApple = nbAndroid = nbWeb = 0;
-            console.log("slt");
+            getRates();
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onload = function () {
                 let data = JSON.parse(this.responseText);
@@ -254,11 +254,11 @@
                     indexLabelFontSize: 10,
                     indexLabelPlacement: "outside",
                     dataPoints: [
-                        { x: 1, y: rate1},
-                        { x: 2, y: rate2},
-                        { x: 3, y: rate3},
-                        { x: 4, y: rate4},
-                        { x: 5, y: rate5}
+                        { x: 1, y: rate1, indexLabel:"1"},
+                        { x: 2, y: rate2, indexLabel:"2"},
+                        { x: 3, y: rate3, indexLabel:"3"},
+                        { x: 4, y: rate4, indexLabel:"4"},
+                        { x: 5, y: rate5, indexLabel:"5"}
                     ]
                 }]
             });
